@@ -31,7 +31,19 @@ const VoiceDetails: React.FC<VoiceDetailsProps> = ({ selectedVoice }) => {
       <CardContent style={{ padding: '10px' }}>
         <Typography variant="h6" component="div" style={{ display: 'flex', alignItems: 'center' }}>
           {selectedVoice.name}
-          <IconButton onClick={handlePlayPause} style={{ marginLeft: '10px' }}>
+          <IconButton
+            onClick={handlePlayPause}
+            style={{
+              marginLeft: '10px',
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '5px 10px',
+              // muda tamanho texto
+              fontSize: '1rem',
+            }}
+          >
             {isPlaying ? <PauseIcon /> : <PlayArrowIcon />} Preview
           </IconButton>
         </Typography>
