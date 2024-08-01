@@ -4,4 +4,5 @@ export interface Voice {
   category: string;
   labels: { [key: string]: string };
   description: string;
+  preview_url: string;
 }

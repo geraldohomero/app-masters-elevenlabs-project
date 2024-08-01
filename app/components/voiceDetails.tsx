@@ -1,5 +1,7 @@
-import React from 'react';
-import { Card, CardContent, Typography, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from '@mui/material';
+import React, { useState } from 'react';
+import { Card, CardContent, Typography, Table, TableBody, TableCell, TableContainer, TableRow, Paper, IconButton } from '@mui/material';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
 import { Voice } from '../types/voice';
 import labelTranslations from './translations';
 
@@ -8,11 +10,30 @@ interface VoiceDetailsProps {
 }
 
 const VoiceDetails: React.FC<VoiceDetailsProps> = ({ selectedVoice }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      audio?.pause();
+      setIsPlaying(false);
+    } else {
+      const newAudio = new Audio(selectedVoice.preview_url);
+      newAudio.play();
+      setAudio(newAudio);
+      setIsPlaying(true);
+      newAudio.onended = () => setIsPlaying(false);
+    }
+  };
+
   return (
     <Card style={{ height: '100%', padding: '10px' }}>
       <CardContent style={{ padding: '10px' }}>
-        <Typography variant="h6" component="div">
+        <Typography variant="h6" component="div" style={{ display: 'flex', alignItems: 'center' }}>
           {selectedVoice.name}
+          <IconButton onClick={handlePlayPause} style={{ marginLeft: '10px' }}>
+            {isPlaying ? <PauseIcon /> : <PlayArrowIcon />} Preview
+          </IconButton>
         </Typography>
         <div>
           <Typography variant="body2" color="text.secondary">

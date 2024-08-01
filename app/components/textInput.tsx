@@ -1,15 +1,13 @@
 import React from 'react';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 interface TextInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   placeholder: string;
 }
-
 const TextInput: React.FC<TextInputProps> = ({ value, onChange, placeholder }) => {
   return (
-    <TextareaAutosize
+    <textarea
       value={value}
       onChange={onChange}
       placeholder={placeholder}
