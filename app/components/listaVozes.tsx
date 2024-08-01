@@ -17,9 +17,10 @@ import {
   TableRow,
   Paper,
   MenuItem,
-  Select
+  Select,
+  createTheme,
+  ThemeProvider
 } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const darkTheme = createTheme({
   palette: {
@@ -68,7 +69,7 @@ function ListaVozes() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      const audio = new Audio(`/audio/${data.fileName}`);
+      const audio = new Audio(data.url);
       audio.play();
     } catch (error) {
       console.error("Erro ao obter o áudio:", error);
@@ -91,12 +92,15 @@ function ListaVozes() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      const link = document.createElement('a');
-      link.href = `/audio/${data.fileName}`;
-      link.download = `${data.fileName}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const blob = await fetch(data.url).then(res => res.blob());
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'audio.mp3';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Erro ao baixar o áudio:", error);
     } finally {
@@ -115,11 +119,6 @@ function ListaVozes() {
               onChange={(e) => setTexto(e.target.value)}
               placeholder="Digite o texto aqui"
               style={{ width: '100%', padding: '10px', marginBottom: '20px' }}
-              minRows={5}
-              {...((props: any) => {
-                const { 'data-sharkid': _, ...restProps } = props;
-                return restProps;
-              })}
             />
             <Select
               value={selectedVoice ? selectedVoice.voice_id : ''}

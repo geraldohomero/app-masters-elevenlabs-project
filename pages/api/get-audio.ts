@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import fetch from 'node-fetch';
-import fs from 'fs';
-import path from 'path';
+import { put } from '@vercel/blob';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { voiceId, text } = req.body;
@@ -26,11 +25,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const audioBuffer = await response.buffer();
     const fileName = `${voiceId}-${Date.now()}.mp3`;
-    const filePath = path.join(process.cwd(), 'public', 'audio', fileName);
 
-    fs.writeFileSync(filePath, audioBuffer);
+    // Upload do áudio para o Blob Storage da Vercel
+    const blob = await put(fileName, Buffer.from(audioBuffer), {
+      access: 'public',
+      token: process.env.BLOB_READ_WRITE_TOKEN || '',
+      contentType: 'audio/mpeg',
+    });
 
-    res.status(200).json({ fileName });
+    res.status(200).json({ url: blob.url });
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal Server Error');
