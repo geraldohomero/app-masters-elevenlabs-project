@@ -16,6 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         text,
         output_format: 'mp3_44100_128',
         enable_logging: true,
+        model_id: "eleven_multilingual_v2"
       }),
     });
 

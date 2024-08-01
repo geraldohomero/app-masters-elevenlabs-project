@@ -63,7 +63,10 @@ function ListaVozes() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ voiceId, text: texto }),
+        body: JSON.stringify({
+          voiceId,
+          text: texto
+        })
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -86,7 +89,10 @@ function ListaVozes() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ voiceId, text: texto }),
+        body: JSON.stringify({
+          voiceId,
+          text: texto
+        })
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
