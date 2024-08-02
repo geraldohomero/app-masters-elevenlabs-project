@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Projeto [Next.js](https://nextjs.org/) criado com [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Começando
 
-First, run the development server:
+ Clone o repositório:
+   ```bash
+   git clone https://github.com/geraldohomero/app-masters-elevenlabs-project.git
+   ```
+
+No terminal:
 
 ```bash
 npm run dev
-# or
+# ou
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Projeto Texto em Voz
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Este projeto é uma aplicação web que converte texto em voz utilizando a `API` da `ElevenLabs`. O projeto foi desenvolvido como parte do `Projeto App Masters` e utiliza diversas tecnologias modernas, incluindo React, TypeScript e [Material-UI](https://mui.com/material-ui/).
 
-## Learn More
+## Funcionalidades
 
-To learn more about Next.js, take a look at the following resources:
+- **Entrada de Texto**: Permite ao usuário digitar o texto que deseja converter em voz.
+- **Seleção de Voz**: O usuário pode selecionar diferentes vozes disponíveis para a conversão.
+- **Reprodução de Áudio**: O usuário pode ouvir a conversão do texto em voz diretamente na aplicação.
+- **Download de Áudio**: O usuário pode baixar o áudio gerado em formato MP3.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tecnologias Utilizadas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
+- **TypeScript**: Superset do JavaScript que adiciona tipagem estática ao código.
+- **Material-UI**: Biblioteca de componentes de interface de usuário para React.
+- **API da ElevenLabs**: Serviço de conversão de texto em voz.
+- **Vercel Blob Storage**: Serviço de armazenamento de arquivos para download.
+- **Vercel**: Plataforma de deploy de aplicações web.
 
-## Deploy on Vercel
+## Estrutura do Projeto
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Componentes Principais
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **textInput**: Componente para entrada de texto.
+- **voiceSelect**: Componente para seleção de voz.
+- **voiceDetails**: Componente que exibe detalhes da voz selecionada.
+- **listaVozes**: Componente principal que integra os demais componentes e gerencia o estado da aplicação.
+
+### Temas
+
+- **Theme**: Configuração de tema escuro utilizando `Material-UI`.
+
+### Traduções
+
+- **Translations**: Mapeamento de traduções para `labels` utilizados na aplicação.
+
+### Estrutura de diretórios
+
+```markdown
+.
+├── app/
+│   ├── components/
+│   │   ├── listaVozes.tsx
+│   │   ├── textInput.tsx
+│   │   ├── theme.tsx
+│   │   ├── translations.tsx
+│   │   ├── voiceDetails.tsx
+│   │   └── voiceSelect.tsx
+│   ├── types/
+│   |   └── voice.d.ts
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── page.module.css
+│   └── page.tsx
+├── node_modules
+├── pages/
+│   └── api/
+│       ├── get-audio.ts
+│       └── voices.ts
+├── public/
+├── .env.local
+├── .gitignore
+├── next-env.d.ts
+├── next.config.mjs
+├── package-lock.json
+├── package.json
+├── README.md
+└── tsconfig.json
+```
