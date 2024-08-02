@@ -9,6 +9,8 @@ interface VoiceSelectProps {
 }
 
 const VoiceSelect: React.FC<VoiceSelectProps> = ({ vozes, selectedVoice, onChange }) => {
+  const sortedVozes = [...vozes].sort((a, b) => a.name.localeCompare(b.name));
+
   return (
     <Select
       value={selectedVoice ? selectedVoice.voice_id : ''}
@@ -19,7 +21,7 @@ const VoiceSelect: React.FC<VoiceSelectProps> = ({ vozes, selectedVoice, onChang
       <MenuItem value="">
         <em>Selecione uma voz</em>
       </MenuItem>
-      {vozes.map(voice => (
+      {sortedVozes.map(voice => (
         <MenuItem key={voice.voice_id} value={voice.voice_id}>
           {voice.name} - {voice.labels.description}
         </MenuItem>

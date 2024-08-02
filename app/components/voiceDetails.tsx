@@ -40,7 +40,6 @@ const VoiceDetails: React.FC<VoiceDetailsProps> = ({ selectedVoice }) => {
               alignItems: 'center',
               justifyContent: 'center',
               padding: '5px 10px',
-              // muda tamanho texto
               fontSize: '1rem',
             }}
           >
