@@ -10,9 +10,11 @@ Projeto [Next.js](https://nextjs.org/) criado com [`create-next-app`](https://gi
 No terminal:
 
 ```bash
+npm install
+```
+
+```bash
 npm run dev
-# ou
-yarn dev
 ```
 
 Abra [http://localhost:3000](http://localhost:3000) 
