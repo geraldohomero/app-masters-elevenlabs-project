@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select, MenuItem, IconButton } from '@mui/material';
+import { Select, MenuItem } from '@mui/material';
 import { Voice } from '../types/voice';
 
 interface VoiceSelectProps {

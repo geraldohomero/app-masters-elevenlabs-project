@@ -1,14 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { CssBaseline, Container, Grid, Button, ThemeProvider } from '@mui/material';
+import { CssBaseline, Container, Grid, Button, ThemeProvider, CircularProgress } from '@mui/material';
 import TextInput from './textInput';
 import VoiceSelect from './voiceSelect';
 import VoiceDetails from './voiceDetails';
 import darkTheme from './theme';
 import { Voice } from '../types/voice';
 
-const fetchVoices = async (setVozes: React.Dispatch<React.SetStateAction<Voice[]>>) => {
+const fetchVoices = async (setVozes: React.Dispatch<React.SetStateAction<Voice[]>>, setLoadingVoiceSelect: React.Dispatch<React.SetStateAction<boolean>>) => {
+  setLoadingVoiceSelect(true);
   try {
     const response = await fetch('/api/voices');
     if (!response.ok) {
@@ -18,11 +19,13 @@ const fetchVoices = async (setVozes: React.Dispatch<React.SetStateAction<Voice[]
     setVozes(data.voices);
   } catch (err) {
     console.error(err);
+  } finally {
+    setLoadingVoiceSelect(false);
   }
 };
 
-const handlePlay = async (voiceId: string, texto: string, setLoadingVoiceId: React.Dispatch<React.SetStateAction<string | null>>) => {
-  setLoadingVoiceId(voiceId);
+const handlePlay = async (voiceId: string, texto: string, setVoiceLoadingState: React.Dispatch<React.SetStateAction<string | null>>) => {
+  setVoiceLoadingState(`play-${voiceId}`);
   try {
     const response = await fetch("/api/get-audio", {
       method: "POST",
@@ -40,12 +43,12 @@ const handlePlay = async (voiceId: string, texto: string, setLoadingVoiceId: Rea
   } catch (error) {
     console.error("Erro ao obter o áudio:", error);
   } finally {
-    setLoadingVoiceId(null);
+    setVoiceLoadingState(null);
   }
 };
 
-const handleDownload = async (voiceId: string, texto: string, setLoadingVoiceId: React.Dispatch<React.SetStateAction<string | null>>) => {
-  setLoadingVoiceId(voiceId);
+const handleDownload = async (voiceId: string, texto: string, setVoiceLoadingState: React.Dispatch<React.SetStateAction<string | null>>) => {
+  setVoiceLoadingState(`download-${voiceId}`);
   try {
     const response = await fetch("/api/get-audio", {
       method: "POST",
@@ -70,18 +73,19 @@ const handleDownload = async (voiceId: string, texto: string, setLoadingVoiceId:
   } catch (error) {
     console.error("Erro ao baixar o áudio:", error);
   } finally {
-    setLoadingVoiceId(null);
+    setVoiceLoadingState(null);
   }
 };
 
 const ListaVozes: React.FC = () => {
   const [vozes, setVozes] = useState<Voice[]>([]);
   const [texto, setTexto] = useState<string>('');
-  const [loadingVoiceId, setLoadingVoiceId] = useState<string | null>(null);
+  const [loadingVoiceSelect, setLoadingVoiceSelect] = useState<boolean>(false);
+  const [voiceLoadingState, setVoiceLoadingState] = useState<string | null>(null);
   const [selectedVoice, setSelectedVoice] = useState<Voice | null>(null);
 
   useEffect(() => {
-    fetchVoices(setVozes);
+    fetchVoices(setVozes, setLoadingVoiceSelect);
   }, []);
 
   return (
@@ -95,14 +99,18 @@ const ListaVozes: React.FC = () => {
               onChange={(e) => setTexto(e.target.value)}
               placeholder="Digite o texto aqui"
             />
-            <VoiceSelect
-              vozes={vozes}
-              selectedVoice={selectedVoice}
-              onChange={(voiceId) => {
-                const selected = vozes.find(voice => voice.voice_id === voiceId);
-                setSelectedVoice(selected || null);
-              }}
-            />
+            {loadingVoiceSelect ? (
+              <CircularProgress />
+            ) : (
+              <VoiceSelect
+                vozes={vozes}
+                selectedVoice={selectedVoice}
+                onChange={(voiceId) => {
+                  const selected = vozes.find(voice => voice.voice_id === voiceId);
+                  setSelectedVoice(selected || null);
+                }}
+              />
+            )}
             {selectedVoice && (
               <Grid container spacing={2} style={{ marginTop: '20px' }}>
                 <Grid item xs={12}>
@@ -113,20 +121,20 @@ const ListaVozes: React.FC = () => {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={() => handlePlay(selectedVoice.voice_id, texto, setLoadingVoiceId)}
-                      disabled={loadingVoiceId === selectedVoice.voice_id}
+                      onClick={() => handlePlay(selectedVoice.voice_id, texto, setVoiceLoadingState)}
+                      disabled={voiceLoadingState === `play-${selectedVoice.voice_id}`}
                       style={{ marginTop: '10px', marginLeft: '18px' }}
                     >
-                      Play
+                      {voiceLoadingState === `play-${selectedVoice.voice_id}` ? <CircularProgress size={24} /> : 'Play'}
                     </Button>
                     <Button
                       variant="contained"
                       color="secondary"
-                      onClick={() => handleDownload(selectedVoice.voice_id, texto, setLoadingVoiceId)}
-                      disabled={loadingVoiceId === selectedVoice.voice_id}
+                      onClick={() => handleDownload(selectedVoice.voice_id, texto, setVoiceLoadingState)}
+                      disabled={voiceLoadingState === `download-${selectedVoice.voice_id}`}
                       style={{ marginTop: '10px', marginLeft: '10px' }}
                     >
-                      Download
+                      {voiceLoadingState === `download-${selectedVoice.voice_id}` ? <CircularProgress size={24} /> : 'Download'}
                     </Button>
                   </>
                 )}
