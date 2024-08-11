@@ -5,6 +5,7 @@ html {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  background-color: #f5f5f5
 }
 
 #root,
@@ -25,11 +26,19 @@ html {
   margin-left: 10px;
 }
 
+.container {
+  flex: 0 0 80%;
+  max-width: 50%;
+}
+
+
 @media (max-width: 768px) {
   .voice-card-buttons {
-    flex-direction: column;
-    align-items: flex-end;
-    width: 100%;
+    align-items: center;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
 
   .voice-card-buttons button {
@@ -37,9 +46,21 @@ html {
     margin-top: 10px;
     padding: 1px 10px;
     font-size: 12px;
+
   }
 
   .responsive-title {
     font-size: 11px;
+  }
+
+  .containerCard {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .container {
+    flex: 0 0 90%;
+    max-width: 100%;
   }
 }

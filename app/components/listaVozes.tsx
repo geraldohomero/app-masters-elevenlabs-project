@@ -1,13 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { Layout, Row, Col, Spin, Input, Typography } from 'antd';
+import { Collapse, Layout, Row, Col, Spin, Typography, Input } from 'antd';
 import { Voice } from '../types/voice';
 import VoiceSelect from './voiceSelect';
+import VoiceFilter from './VoiceFilter';
+import { useVoiceFilter } from '../hooks/useVoiceFilter';
+import { Footer } from 'antd/es/layout/layout';
+import { GithubOutlined } from '@ant-design/icons';
 
-const { Header, Content } = Layout;
+
+const { Content } = Layout;
 const { TextArea } = Input;
 const { Title } = Typography;
+
 
 const fetchVoices = async (setVozes: React.Dispatch<React.SetStateAction<Voice[]>>, setLoadingVoiceSelect: React.Dispatch<React.SetStateAction<boolean>>) => {
   setLoadingVoiceSelect(true);
@@ -84,46 +90,75 @@ const ListaVozes: React.FC = () => {
   const [loadingVoiceSelect, setLoadingVoiceSelect] = useState<boolean>(false);
   const [voiceLoadingState, setVoiceLoadingState] = useState<string | null>(null);
   const [selectedVoice, setSelectedVoice] = useState<Voice | null>(null);
+  const { filters, selectedFilters, handleFilterChange, filteredVozes } = useVoiceFilter(vozes);
 
   useEffect(() => {
     fetchVoices(setVozes, setLoadingVoiceSelect);
   }, []);
 
+  const items = [
+    {
+      key: '1',
+      label: 'Filtrar vozes',
+      children: (
+        <VoiceFilter
+          filters={filters}
+          selectedFilters={selectedFilters}
+          onFilterChange={handleFilterChange}
+        />
+      ),
+      style: { backgroundColor: '#b1d4ff', borderRadius: 5 }
+    }
+  ];
+
   return (
     <Layout>
-      <Header style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Title style={{ color: 'white' }}>App Masters</Title>
-      </Header>
-      <Content style={{ padding: '20px' }}>
+      <div>
+        <Title style={{ color: 'black', fontSize: '39px', textAlign: 'center', padding: '1px' }}>
+          Texto em Voz
+        </Title>
+        <Title style={{ color: 'black', fontSize: '20px', textAlign: 'center' }}>
+          App Masters
+        </Title>
+      </div>
+      <Content>
         <Row justify="center" align="middle" style={{ minHeight: '20vh' }}>
-          <Col span={12}>
+          <Col className='container' span={12}>
             <TextArea
               value={texto}
+              style={{ marginTop: '14px', fontSize: '22px' }}
               onChange={(e) => setTexto(e.target.value)}
               placeholder="Digite o texto aqui e depois selecione uma voz"
               rows={3}
             />
+
+            <Collapse style={{ marginTop: 10, fontSize: '21px' }} items={items} />
+
             {loadingVoiceSelect ? (
               <Spin />
             ) : (
               <VoiceSelect
-                vozes={vozes}
+                vozes={filteredVozes}
                 selectedVoice={selectedVoice}
-                onChange={(voiceId) => {
-                  const voice = vozes.find(v => v.voice_id === voiceId) || null;
-                  setSelectedVoice(voice);
-                }}
+                onChange={(voice: Voice) => setSelectedVoice(vozes.find((voice) => voice.voice_id === voice.voice_id) || null)}
                 texto={texto}
                 handlePlay={handlePlay}
                 handleDownload={handleDownload}
                 setVoiceLoadingState={setVoiceLoadingState}
                 voiceLoadingState={voiceLoadingState}
+                setSelectedVoice={setSelectedVoice}
               />
             )}
           </Col>
         </Row>
       </Content>
+      <Footer style={{ textAlign: 'center', color: 'black' }}>
+        <a style={{ marginLeft: '10px' }} href="https://github.com/geraldohomero/app-masters-elevenlabs-project" target="_blank" rel="noopener noreferrer">
+          <GithubOutlined style={{ fontSize: '14px', color: 'black' }} /> GitHub
+        </a>
+      </Footer>
     </Layout>
+
   );
 };
 
