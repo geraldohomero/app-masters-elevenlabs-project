@@ -58,6 +58,7 @@ Este projeto é uma aplicação web que converte texto em voz utilizando a `API`
 │   │   ├── listaVozes.tsx
 │   │   ├── textInput.tsx
 │   │   ├── voiceDetails.tsx
+│   │   ├── VoiceFilter.tsx
 │   │   └── voiceSelect.tsx
 │   ├── hooks/
 │   |   └── useVoiceFilter.ts
