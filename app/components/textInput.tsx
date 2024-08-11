@@ -1,13 +1,15 @@
 import React from 'react';
+import { Input } from 'antd';
 
 interface TextInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   placeholder: string;
 }
+
 const TextInput: React.FC<TextInputProps> = ({ value, onChange, placeholder }) => {
   return (
-    <textarea
+    <Input.TextArea
       value={value}
       onChange={onChange}
       placeholder={placeholder}

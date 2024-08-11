@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { CssBaseline, Container, Grid, Button, ThemeProvider, CircularProgress } from '@mui/material';
-import TextInput from './textInput';
-import VoiceSelect from './voiceSelect';
-import VoiceDetails from './voiceDetails';
-import darkTheme from './theme';
+import { Layout, Row, Col, Spin, Input, Typography } from 'antd';
 import { Voice } from '../types/voice';
+import VoiceSelect from './voiceSelect';
+
+const { Header, Content } = Layout;
+const { TextArea } = Input;
+const { Title } = Typography;
 
 const fetchVoices = async (setVozes: React.Dispatch<React.SetStateAction<Voice[]>>, setLoadingVoiceSelect: React.Dispatch<React.SetStateAction<boolean>>) => {
   setLoadingVoiceSelect(true);
@@ -89,61 +90,40 @@ const ListaVozes: React.FC = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <Container>
-        <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '20vh', paddingTop: '20px' }}>
-          <Grid item xs={12} md={6}>
-            <TextInput
+    <Layout>
+      <Header style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Title style={{ color: 'white' }}>App Masters</Title>
+      </Header>
+      <Content style={{ padding: '20px' }}>
+        <Row justify="center" align="middle" style={{ minHeight: '20vh' }}>
+          <Col span={12}>
+            <TextArea
               value={texto}
               onChange={(e) => setTexto(e.target.value)}
-              placeholder="Digite o texto aqui"
+              placeholder="Digite o texto aqui e depois selecione uma voz"
+              rows={3}
             />
             {loadingVoiceSelect ? (
-              <CircularProgress />
+              <Spin />
             ) : (
               <VoiceSelect
                 vozes={vozes}
                 selectedVoice={selectedVoice}
                 onChange={(voiceId) => {
-                  const selected = vozes.find(voice => voice.voice_id === voiceId);
-                  setSelectedVoice(selected || null);
+                  const voice = vozes.find(v => v.voice_id === voiceId) || null;
+                  setSelectedVoice(voice);
                 }}
+                texto={texto}
+                handlePlay={handlePlay}
+                handleDownload={handleDownload}
+                setVoiceLoadingState={setVoiceLoadingState}
+                voiceLoadingState={voiceLoadingState}
               />
             )}
-            {selectedVoice && (
-              <Grid container spacing={2} style={{ marginTop: '20px' }}>
-                <Grid item xs={12}>
-                  <VoiceDetails selectedVoice={selectedVoice} />
-                </Grid>
-                {texto && (
-                  <>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => handlePlay(selectedVoice.voice_id, texto, setVoiceLoadingState)}
-                      disabled={voiceLoadingState === `play-${selectedVoice.voice_id}`}
-                      style={{ marginTop: '10px', marginLeft: '18px' }}
-                    >
-                      {voiceLoadingState === `play-${selectedVoice.voice_id}` ? <CircularProgress size={24} /> : 'Play'}
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => handleDownload(selectedVoice.voice_id, texto, setVoiceLoadingState)}
-                      disabled={voiceLoadingState === `download-${selectedVoice.voice_id}`}
-                      style={{ marginTop: '10px', marginLeft: '10px' }}
-                    >
-                      {voiceLoadingState === `download-${selectedVoice.voice_id}` ? <CircularProgress size={24} /> : 'Download'}
-                    </Button>
-                  </>
-                )}
-              </Grid>
-            )}
-          </Grid>
-        </Grid>
-      </Container>
-    </ThemeProvider>
+          </Col>
+        </Row>
+      </Content>
+    </Layout>
   );
 };
 

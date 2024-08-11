@@ -9,12 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.4.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^5.16.6",
-    "@mui/material": "^5.16.6",
     "@types/node-fetch": "^2.6.11",
     "@vercel/blob": "^0.23.4",
+    "antd": "^5.20.0",
     "dotenv": "^16.4.5",
     "next": "14.2.5",
     "node-fetch": "^3.3.2",
