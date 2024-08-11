@@ -7,6 +7,15 @@ Projeto [Next.js](https://nextjs.org/) criado com [`create-next-app`](https://gi
    git clone https://github.com/geraldohomero/app-masters-elevenlabs-project.git
    ```
 
+## Variáveis
+
+Crie um arquivo `.env.local` na raiz do projeto e adicione:
+
+```bash
+NEXT_PUBLIC_API_KEY=<sua Chave VERCEL>
+BLOB_READ_WRITE_TOKEN=<Token para o Blob Storage>
+```
+
 No terminal:
 
 ```bash
