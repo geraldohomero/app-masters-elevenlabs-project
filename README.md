@@ -21,7 +21,7 @@ Abra [http://localhost:3000](http://localhost:3000)
 
 # Projeto Texto em Voz
 
-Este projeto é uma aplicação web que converte texto em voz utilizando a `API` da `ElevenLabs`. O projeto foi desenvolvido como parte do `Projeto App Masters` e utiliza diversas tecnologias modernas, incluindo React, TypeScript e [Material-UI](https://mui.com/material-ui/).
+Este projeto é uma aplicação web que converte texto em voz utilizando a `API` da `ElevenLabs`. O projeto foi desenvolvido como parte do `Projeto App Masters` e utiliza diversas tecnologias modernas, incluindo React, TypeScript e [Ant Design](https://ant.design/).
 
 ## Funcionalidades
 
@@ -34,7 +34,7 @@ Este projeto é uma aplicação web que converte texto em voz utilizando a `API`
 
 - **React**: Biblioteca JavaScript para construção de interfaces de usuário.
 - **TypeScript**: Superset do JavaScript que adiciona tipagem estática ao código.
-- **Material-UI**: Biblioteca de componentes de interface de usuário para React.
+- **Ant Design**: Biblioteca de componentes de interface de usuário para React.
 - **API da ElevenLabs**: Serviço de conversão de texto em voz.
 - **Vercel Blob Storage**: Serviço de armazenamento de arquivos para download.
 - **Vercel**: Plataforma de deploy de aplicações web.
@@ -46,15 +46,8 @@ Este projeto é uma aplicação web que converte texto em voz utilizando a `API`
 - **textInput**: Componente para entrada de texto.
 - **voiceSelect**: Componente para seleção de voz.
 - **voiceDetails**: Componente que exibe detalhes da voz selecionada.
+- **VoiceFilter.tsx**: Componente de filtro da lista de vozes
 - **listaVozes**: Componente principal que integra os demais componentes e gerencia o estado da aplicação.
-
-### Temas
-
-- **Theme**: Configuração de tema escuro utilizando `Material-UI`.
-
-### Traduções
-
-- **Translations**: Mapeamento de traduções para `labels` utilizados na aplicação.
 
 ### Estrutura de diretórios
 
@@ -64,16 +57,15 @@ Este projeto é uma aplicação web que converte texto em voz utilizando a `API`
 │   ├── components/
 │   │   ├── listaVozes.tsx
 │   │   ├── textInput.tsx
-│   │   ├── theme.tsx
-│   │   ├── translations.tsx
 │   │   ├── voiceDetails.tsx
 │   │   └── voiceSelect.tsx
+│   ├── hooks/
+│   |   └── useVoiceFilter.ts
 │   ├── types/
 │   |   └── voice.d.ts
 │   ├── favicon.ico
 │   ├── globals.css
 │   ├── layout.tsx
-│   ├── page.module.css
 │   └── page.tsx
 ├── node_modules
 ├── pages/
@@ -91,5 +83,5 @@ Este projeto é uma aplicação web que converte texto em voz utilizando a `API`
 └── tsconfig.json
 ```
 ***
-![image](https://github.com/user-attachments/assets/d0ed6ed7-92de-4043-b0bf-349a4695cc46)
+![image](https://github.com/user-attachments/assets/55884a3b-b22e-4f80-be22-187ab7c91037)
 
