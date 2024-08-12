@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from 'antd';
+import { Select, Tag } from 'antd';
 
 const { Option } = Select;
 
@@ -14,23 +14,39 @@ const VoiceFilter: React.FC<VoiceFilterProps> = ({ filters, selectedFilters, onF
 
   return (
     <div>
-      {sortedFilterNames.map((filterName) => (
-        <Select
-          key={filterName}
-          value={selectedFilters[filterName] || undefined}
-          onChange={(value) => onFilterChange(filterName, value)}
-          style={{ width: "50%" }}
-          placeholder={`${filterName}`}
-          allowClear
-        >
-          <Option value="">{`${filterName}`}</Option>
-          {filters[filterName].map((value) => (
-            <Option key={value} value={value}>
-              {value}
-            </Option>
-          ))}
-        </Select>
-      ))}
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {sortedFilterNames.map((filterName) => (
+          <div key={filterName} style={{ flex: '50%' }}>
+            <Select
+              value={selectedFilters[filterName] || undefined}
+              onChange={(value) => onFilterChange(filterName, value)}
+              style={{ width: '100%' }}
+              placeholder={`${filterName}`}
+            >
+              <Option value="">{`${filterName}`}</Option>
+              {filters[filterName].map((value) => (
+                <Option key={value} value={value}>
+                  {value}
+                </Option>
+              ))}
+            </Select>
+          </div>
+        ))}
+      </div>
+      <div style={{ marginTop: '10px' }}>
+        {Object.keys(selectedFilters).map((filterName) => (
+          selectedFilters[filterName] && (
+            <Tag
+              key={filterName}
+              closable
+              onClose={() => onFilterChange(filterName, '')}
+              style={{ marginRight: '10px', marginBottom: '10px' }}
+            >
+              {selectedFilters[filterName]}
+            </Tag>
+          )
+        ))}
+      </div>
     </div>
   );
 };
