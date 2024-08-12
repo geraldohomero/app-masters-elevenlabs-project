@@ -36,6 +36,7 @@ Este projeto é uma aplicação web que converte texto em voz utilizando a `API`
 
 - **Entrada de Texto**: Permite ao usuário digitar o texto que deseja converter em voz.
 - **Seleção de Voz**: O usuário pode selecionar diferentes vozes disponíveis para a conversão.
+- **Filtro de vozes**: Podendo escolher por categoria, idade, gênero, sotaque e descrição.
 - **Reprodução de Áudio**: O usuário pode ouvir a conversão do texto em voz diretamente na aplicação.
 - **Download de Áudio**: O usuário pode baixar o áudio gerado em formato MP3.
 
