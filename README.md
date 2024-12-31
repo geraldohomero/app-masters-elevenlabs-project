@@ -92,6 +92,8 @@ Este projeto é uma aplicação web que converte texto em voz utilizando a `API`
 ├── README.md
 └── tsconfig.json
 ```
+
 ***
+
 ![image](https://github.com/user-attachments/assets/55884a3b-b22e-4f80-be22-187ab7c91037)
 
